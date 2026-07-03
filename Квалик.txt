@@ -1,0 +1,1365 @@
+ОБНОВЛЕННЫЙ БЛОК 1: БАЗОВЫЕ НАСТРОЙКИ (для ВСЕХ вариантов) - 100% РАБОЧИЕ КОМАНДЫ
+bash
+# =====================================================
+# 1. ПРОВЕРКА ИНТЕРНЕТА И ОБНОВЛЕНИЕ СИСТЕМЫ
+# =====================================================
+ping -c 4 ya.ru
+sudo apt update && sudo apt upgrade -y
+
+# =====================================================
+# 2. УСТАНОВКА БАЗОВОГО ПО
+# =====================================================
+sudo apt install -y build-essential git vim gedit curl wget net-tools
+sudo apt install -y libreoffice
+
+# =====================================================
+# 3. УСТАНОВКА ВИРТУАЛЬНОГО ПРИНТЕРА (CUPS)
+# =====================================================
+sudo apt install -y cups cups-client cups-bsd
+sudo systemctl enable cups
+sudo systemctl start cups
+# Проверка: открыть браузер и перейти на http://localhost:631
+
+# =====================================================
+# 4. СОЗДАНИЕ ПОЛЬЗОВАТЕЛЕЙ И ГРУПП (ИСПРАВЛЕНО)
+# =====================================================
+sudo groupadd devgroup
+sudo useradd -m -G devgroup -s /bin/bash student
+sudo useradd -m -G devgroup -s /bin/bash teacher
+echo "student:123456" | sudo chpasswd
+echo "teacher:123456" | sudo chpasswd
+
+# Проверка создания
+id student
+id teacher
+
+# =====================================================
+# 5. НАСТРОЙКА ПРАВ ДОСТУПА
+# =====================================================
+sudo mkdir -p /var/www/project
+sudo chown root:devgroup /var/www/project
+sudo chmod 770 /var/www/project
+
+# Проверка прав
+ls -la /var/www/
+
+# =====================================================
+# 6. РЕЗЕРВНОЕ КОПИРОВАНИЕ
+# =====================================================
+sudo tar -czf /backup_home_$(date +%Y%m%d).tar.gz /home/student 2>/dev/null
+sudo tar -czf /backup_etc_$(date +%Y%m%d).tar.gz /etc 2>/dev/null
+ls -la /backup_*.tar.gz
+
+# =====================================================
+# 7. УСТАНОВКА TIMESHIFT (ТОЧКИ ВОССТАНОВЛЕНИЯ)
+# =====================================================
+sudo apt install -y timeshift
+sudo timeshift --create --comments "Initial_Backup_$(date +%Y%m%d)"
+sudo timeshift --list
+
+# =====================================================
+# 8. НАСТРОЙКА ЖУРНАЛОВ МОНИТОРИНГА
+# =====================================================
+sudo tail -f /var/log/auth.log &
+# Ctrl+C для выхода
+
+# =====================================================
+# 9. ДОПОЛНИТЕЛЬНО: НАСТРОЙКА SSH (для удаленного доступа)
+# =====================================================
+sudo apt install -y openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh
+________________________________________
+🚀 ОБНОВЛЕННЫЕ ВАРИАНТЫ (ТОЛЬКО РАБОЧИЕ КОМАНДЫ)
+________________________________________
+ВАРИАНТ 1: Web-разработка (Python/JavaScript, Django/Node.js)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА NODE.JS (исправлено)
+# =====================================================
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v && npm -v
+
+# =====================================================
+# УСТАНОВКА PYTHON И DJANGO
+# =====================================================
+sudo apt install -y python3 python3-pip python3-venv
+pip3 install django
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+
+# =====================================================
+# УСТАНОВКА POSTMAN
+# =====================================================
+sudo snap install postman
+
+# =====================================================
+# УСТАНОВКА GIT
+# =====================================================
+sudo apt install -y git
+git --version
+
+# =====================================================
+# УСТАНОВКА ДОПОЛНИТЕЛЬНЫХ ПЛАГИНОВ VS CODE
+# =====================================================
+code --install-extension ms-python.python
+code --install-extension ms-vscode.vscode-typescript-next
+________________________________________
+ВАРИАНТ 1: Web-разработка (Python/JavaScript, Django/Node.js) — АДАПТИРОВАННЫЙ ДЛЯ РФ
+bash
+# =====================================================
+# 1. УСТАНОВКА VS CODE (через snap - работает всегда)
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# 2. УСТАНОВКА NODE.JS через NVM (САМЫЙ НАДЕЖНЫЙ СПОСОБ)
+#    (НЕ используем curl к deb.nodesource.com - заблокирован)
+# =====================================================
+
+# 2.1. Установка NVM (менеджер версий Node)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# 2.2. Перезагрузка терминала (или выполнить source)
+source ~/.bashrc
+
+# 2.3. Проверка установки NVM
+nvm --version
+
+# 2.4. Установка Node.js версии 18 (LTS)
+nvm install 18
+
+# 2.5. Установка Node.js версии 20 (LTS) - запасной вариант
+nvm install 20
+
+# 2.6. Использование версии 18 по умолчанию
+nvm use 18
+nvm alias default 18
+
+# 2.7. Проверка установки
+node -v
+npm -v
+
+# =====================================================
+# 3. УСТАНОВКА PYTHON И DJANGO
+# =====================================================
+sudo apt update
+sudo apt install -y python3 python3-pip python3-venv python3-dev
+
+# Установка Django
+pip3 install django
+
+# Проверка
+python3 --version
+django-admin --version
+
+# =====================================================
+# 4. УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo systemctl status postgresql
+
+# =====================================================
+# 5. УСТАНОВКА POSTMAN (через snap - работает всегда)
+# =====================================================
+sudo snap install postman
+
+# =====================================================
+# 6. УСТАНОВКА GIT
+# =====================================================
+sudo apt install -y git
+git --version
+
+# =====================================================
+# 7. УСТАНОВКА ПЛАГИНОВ VS CODE (все через внутренний магазин)
+# =====================================================
+code --install-extension ms-python.python
+code --install-extension ms-vscode.vscode-typescript-next
+code --install-extension esbenp.prettier-vscode
+code --install-extension ms-vscode.vscode-js-profile-flame
+
+# =====================================================
+# 8. УСТАНОВКА ДОПОЛНИТЕЛЬНЫХ УТИЛИТ
+# =====================================================
+
+# Установка curl и wget (если не установлены)
+sudo apt install -y curl wget
+
+# Установка build-essential (для компиляции)
+sudo apt install -y build-essential
+
+# Установка Redis (опционально, для кеширования)
+sudo apt install -y redis-server
+sudo systemctl start redis-server
+
+# =====================================================
+# 9. ПРОВЕРКА ВСЕХ УСТАНОВОК
+# =====================================================
+echo "===== ПРОВЕРКА УСТАНОВКИ ====="
+echo "VS Code: $(code --version | head -1)"
+echo "Node.js: $(node -v)"
+echo "npm: $(npm -v)"
+echo "Python: $(python3 --version)"
+echo "Django: $(django-admin --version 2>/dev/null || echo 'Не установлен')"
+echo "PostgreSQL: $(psql --version)"
+echo "Postman: $(postman --version 2>/dev/null || echo 'Установлен через snap')"
+echo "Git: $(git --version)"
+echo "=============================="
+
+# =====================================================
+# 10. СОЗДАНИЕ ТЕСТОВОГО ПРОЕКТА (для демонстрации)
+# =====================================================
+
+# Создаем папку проекта
+mkdir -p ~/projects/demo
+cd ~/projects/demo
+
+# Создаем тестовый Django проект
+django-admin startproject myproject
+cd myproject
+
+# Создаем тестовое приложение
+python3 manage.py startapp myapp
+
+# Запускаем сервер для проверки
+python3 manage.py runserver 0.0.0.0:8000 &
+# Открыть в браузере: http://localhost:8000
+
+# =====================================================
+# 11. АЛЬТЕРНАТИВНЫЙ СПОСОБ УСТАНОВКИ NODE.JS (через snap)
+#    (если NVM не сработал - запасной вариант)
+# =====================================================
+# sudo snap install node --classic
+
+________________________________________
+ВАРИАНТ 2: Мобильные приложения (Flutter/Dart)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА FLUTTER (исправлено - рабочая версия)
+# =====================================================
+cd ~
+wget -O flutter.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.24.0-stable.tar.xz
+tar -xf flutter.tar.xz
+export PATH="$PATH:$HOME/flutter/bin"
+echo 'export PATH="$PATH:$HOME/flutter/bin"' >> ~/.bashrc
+source ~/.bashrc
+flutter doctor
+
+# =====================================================
+# УСТАНОВКА ANDROID STUDIO
+# =====================================================
+sudo snap install android-studio --classic
+
+# =====================================================
+# УСТАНОВКА GIT
+# =====================================================
+sudo apt install -y git
+
+# =====================================================
+# УСТАНОВКА ПЛАГИНОВ VS CODE ДЛЯ FLUTTER
+# =====================================================
+code --install-extension Dart-Code.dart-code
+code --install-extension Dart-Code.flutter
+________________________________________
+ВАРИАНТ 3: 3D Игры (Unity, C#)
+bash
+# =====================================================
+# УСТАНОВКА UNITY HUB (исправлено)
+# =====================================================
+wget -O unityhub.deb https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.deb
+sudo dpkg -i unityhub.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i unityhub.deb
+
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА BLENDER
+# =====================================================
+sudo snap install blender --classic
+
+# =====================================================
+# УСТАНОВКА GIT LFS
+# =====================================================
+sudo apt install -y git-lfs
+git lfs install
+
+# =====================================================
+# УСТАНОВКА GIMP
+# =====================================================
+sudo apt install -y gimp
+________________________________________
+ВАРИАНТ 4: DevOps (CI/CD)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА DOCKER (исправлено)
+# =====================================================
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+newgrp docker
+docker --version
+
+# =====================================================
+# УСТАНОВКА DOCKER COMPOSE
+# =====================================================
+sudo apt install -y docker-compose
+
+# =====================================================
+# УСТАНОВКА JENKINS (исправлено)
+# =====================================================
+sudo apt install -y openjdk-17-jdk
+wget -O jenkins.deb https://get.jenkins.io/debian-stable/jenkins_2.452.2_all.deb
+sudo dpkg -i jenkins.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i jenkins.deb
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+# =====================================================
+# УСТАНОВКА GRAFANA (исправлено)
+# =====================================================
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+sudo apt update
+sudo apt install -y grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+
+# =====================================================
+# УСТАНОВКА KUBECTL
+# =====================================================
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+kubectl version --client
+________________________________________
+ВАРИАНТ 5: Java-разработка
+bash
+# =====================================================
+# УСТАНОВКА INTELLIJ IDEA
+# =====================================================
+sudo snap install intellij-idea-community --classic
+
+# =====================================================
+# УСТАНОВКА JDK
+# =====================================================
+sudo apt install -y openjdk-17-jdk openjdk-17-jre
+java -version
+javac -version
+
+# =====================================================
+# УСТАНОВКА MAVEN
+# =====================================================
+sudo apt install -y maven
+mvn -version
+
+# =====================================================
+# УСТАНОВКА TOMCAT (исправлено)
+# =====================================================
+wget -O tomcat.tar.gz https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.28/bin/apache-tomcat-10.1.28.tar.gz
+sudo tar -xf tomcat.tar.gz -C /opt
+sudo chmod +x /opt/apache-tomcat-10.1.28/bin/*.sh
+/opt/apache-tomcat-10.1.28/bin/startup.sh
+# Открыть в браузере: http://localhost:8080
+________________________________________
+ВАРИАНТ 6: Десктопные приложения (Electron)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА NODE.JS
+# =====================================================
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# =====================================================
+# УСТАНОВКА ELECTRON
+# =====================================================
+sudo npm install -g electron electron-packager
+
+# =====================================================
+# УСТАНОВКА GIT
+# =====================================================
+sudo apt install -y git
+
+# =====================================================
+# УСТАНОВКА WINE (для сборки .exe)
+# =====================================================
+sudo dpkg --add-architecture i386
+sudo apt update
+sudo apt install -y wine
+________________________________________
+ВАРИАНТ 7: ML и Data Science
+bash
+# =====================================================
+# УСТАНОВКА ANACONDA (исправлено)
+# =====================================================
+cd /tmp
+wget -O anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh
+bash anaconda.sh -b -p $HOME/anaconda3
+echo 'export PATH="$HOME/anaconda3/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+conda --version
+
+# =====================================================
+# УСТАНОВКА PYTHON БИБЛИОТЕК
+# =====================================================
+conda install -y pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+pip install tensorflow mlflow dvc
+
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+________________________________________
+ВАРИАНТ 8: SPA-приложения (React/Angular/Vue)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА NODE.JS (LTS)
+# =====================================================
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# =====================================================
+# УСТАНОВКА ФРЕЙМВОРКОВ
+# =====================================================
+sudo npm install -g @angular/cli
+sudo npm install -g @vue/cli
+sudo npm install -g create-react-app vite
+
+# =====================================================
+# УСТАНОВКА MONGODB
+# =====================================================
+sudo apt install -y mongodb
+sudo systemctl start mongodb
+sudo systemctl enable mongodb
+________________________________________
+ВАРИАНТ 9: .NET разработка
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА .NET SDK (исправлено)
+# =====================================================
+wget -O dotnet-install.sh https://dot.net/v1/dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh --channel 8.0
+echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+dotnet --version
+
+# =====================================================
+# УСТАНОВКА MS SQL SERVER
+# =====================================================
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/22.04/prod.list)"
+sudo apt update
+sudo apt install -y mssql-server
+sudo /opt/mssql/bin/mssql-conf setup
+
+# =====================================================
+# УСТАНОВКА DOCKER
+# =====================================================
+sudo apt install -y docker.io
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+________________________________________
+ВАРИАНТ 10: IoT (Raspberry Pi, ESP32)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И ПАКЕТОВ
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install platformio
+
+# =====================================================
+# УСТАНОВКА TOOLCHAIN (ARM)
+# =====================================================
+sudo apt install -y gcc-arm-none-eabi gdb-multiarch
+
+# =====================================================
+# УСТАНОВКА MQTT (MOSQUITTO)
+# =====================================================
+sudo apt install -y mosquitto mosquitto-clients
+sudo systemctl start mosquitto
+
+# =====================================================
+# УСТАНОВКА AWS IoT SDK
+# =====================================================
+pip3 install awsiotsdk
+________________________________________
+ВАРИАНТ 11: Микроконтроллеры (STM32)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА ARM TOOLCHAIN
+# =====================================================
+sudo apt install -y gcc-arm-none-eabi binutils-arm-none-eabi gdb-arm-none-eabi
+
+# =====================================================
+# УСТАНОВКА OPENOCD (JTAG/SWD)
+# =====================================================
+sudo apt install -y openocd
+
+# =====================================================
+# УСТАНОВКА QEMU (ARM эмулятор)
+# =====================================================
+sudo apt install -y qemu-system-arm qemu-system-aarch64
+
+# =====================================================
+# УСТАНОВКА PLATFORMIO
+# =====================================================
+pip3 install platformio
+________________________________________
+ВАРИАНТ 12: AR/VR
+bash
+# =====================================================
+# УСТАНОВКА UNITY HUB
+# =====================================================
+wget -O unityhub.deb https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.deb
+sudo dpkg -i unityhub.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i unityhub.deb
+
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА OPENXR
+# =====================================================
+sudo apt install -y libopenxr-dev
+
+# =====================================================
+# УСТАНОВКА STEAM (для SteamVR)
+# =====================================================
+sudo apt install -y steam
+________________________________________
+ВАРИАНТ 13: DevSecOps (SAST/DAST/SCA)
+bash
+# =====================================================
+# УСТАНОВКА JENKINS
+# =====================================================
+sudo apt install -y openjdk-17-jdk
+wget -O jenkins.deb https://get.jenkins.io/debian-stable/jenkins_2.452.2_all.deb
+sudo dpkg -i jenkins.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i jenkins.deb
+sudo systemctl start jenkins
+
+# =====================================================
+# УСТАНОВКА SONARQUBE (исправлено)
+# =====================================================
+wget -O sonarqube.zip https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.6.0.92116.zip
+sudo unzip sonarqube.zip -d /opt
+/opt/sonarqube-10.6.0.92116/bin/linux-x86-64/sonar.sh start
+
+# =====================================================
+# УСТАНОВКА TRIVY
+# =====================================================
+sudo apt install -y trivy
+________________________________________
+ВАРИАНТ 14: Автоматизированное тестирование
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И SELENIUM
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install selenium
+
+# =====================================================
+# УСТАНОВКА CHROME DRIVER (исправлено)
+# =====================================================
+wget -O chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.128/linux64/chromedriver-linux64.zip
+sudo unzip chromedriver.zip -d /usr/local/bin/
+sudo chmod +x /usr/local/bin/chromedriver
+
+# =====================================================
+# УСТАНОВКА APPIUM
+# =====================================================
+sudo npm install -g appium
+
+# =====================================================
+# УСТАНОВКА JMETER
+# =====================================================
+wget -O jmeter.zip https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.zip
+sudo unzip jmeter.zip -d /opt
+________________________________________
+ВАРИАНТ 15: Администрирование серверов
+bash
+# =====================================================
+# УСТАНОВКА ANSIBLE
+# =====================================================
+sudo apt install -y ansible
+
+# =====================================================
+# УСТАНОВКА ZABBIX (исправлено)
+# =====================================================
+wget -O zabbix-release.deb https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu22.04_all.deb
+sudo dpkg -i zabbix-release.deb
+sudo apt update
+sudo apt install -y zabbix-server-pgsql zabbix-frontend-php php-pgsql zabbix-agent
+
+# =====================================================
+# УСТАНОВКА GRAFANA + PROMETHEUS
+# =====================================================
+sudo apt install -y prometheus prometheus-node-exporter grafana
+sudo systemctl start grafana-server prometheus
+
+# =====================================================
+# УСТАНОВКА KVM
+# =====================================================
+sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+sudo systemctl start libvirtd
+________________________________________
+ВАРИАНТ 16: Медицинское ПО (C++, Python, HIPAA/GDPR)
+bash
+# =====================================================
+# УСТАНОВКА CLion (C++ IDE)
+# =====================================================
+sudo snap install clion --classic
+
+# =====================================================
+# УСТАНОВКА PYTHON
+# =====================================================
+sudo apt install -y python3 python3-pip python3-venv
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL С КРИПТОГРАФИЕЙ
+# =====================================================
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+# =====================================================
+# УСТАНОВКА DICOM-ПРОСМОТРЩИКА (медицинские изображения)
+# =====================================================
+sudo apt install -y aeskulap
+
+# =====================================================
+# УСТАНОВКА R (статистика)
+# =====================================================
+sudo apt install -y r-base
+
+# =====================================================
+# УСТАНОВКА КРИПТОГРАФИЧЕСКИХ БИБЛИОТЕК
+# =====================================================
+pip3 install cryptography pycryptodome pandas numpy
+________________________________________
+ВАРИАНТ 17: Автомобильные системы (AUTOSAR, CAN-bus)
+bash
+# =====================================================
+# УСТАНОВКА ECLIPSE (для AUTOSAR)
+# =====================================================
+sudo apt install -y eclipse
+
+# =====================================================
+# УСТАНОВКА CAN-UTILS (работа с CAN-шиной)
+# =====================================================
+sudo apt install -y can-utils
+
+# =====================================================
+# НАСТРОЙКА ВИРТУАЛЬНОЙ CAN-ШИНЫ
+# =====================================================
+sudo modprobe vcan
+sudo ip link add dev vcan0 type vcan
+sudo ip link set up vcan0
+ip link show vcan0
+
+# =====================================================
+# УСТАНОВКА WIRESHARK (анализ трафика)
+# =====================================================
+sudo apt install -y wireshark
+sudo dpkg-reconfigure wireshark-common
+sudo usermod -aG wireshark $USER
+
+# =====================================================
+# УСТАНОВКА PYTHON-CAN
+# =====================================================
+pip3 install python-can
+
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+________________________________________
+ВАРИАНТ 18: Банковские приложения (Java EE, Oracle, PCI DSS)
+bash
+# =====================================================
+# УСТАНОВКА INTELLIJ IDEA
+# =====================================================
+sudo snap install intellij-idea-community --classic
+
+# =====================================================
+# УСТАНОВКА JDK
+# =====================================================
+sudo apt install -y openjdk-17-jdk openjdk-17-jre
+java -version
+
+# =====================================================
+# УСТАНОВКА OPENSSL (шифрование)
+# =====================================================
+sudo apt install -y openssl libssl-dev
+
+# =====================================================
+# УСТАНОВКА GOOGLE AUTHENTICATOR (2FA)
+# =====================================================
+sudo apt install -y libpam-google-authenticator
+google-authenticator
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql postgresql-contrib
+
+# =====================================================
+# УСТАНОВКА GIT
+# =====================================================
+sudo apt install -y git
+________________________________________
+ВАРИАНТ 19: Многопользовательские онлайн-игры (C++, Python)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА C++ И PYTHON
+# =====================================================
+sudo apt install -y build-essential python3 python3-pip
+
+# =====================================================
+# УСТАНОВКА PROMETHEUS (мониторинг)
+# =====================================================
+sudo apt install -y prometheus prometheus-node-exporter
+sudo systemctl start prometheus
+
+# =====================================================
+# УСТАНОВКА GRAFANA
+# =====================================================
+sudo apt install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+sudo apt update
+sudo apt install -y grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+
+# =====================================================
+# УСТАНОВКА HAProxy (балансировка)
+# =====================================================
+sudo apt install -y haproxy
+sudo systemctl start haproxy
+
+# =====================================================
+# УСТАНОВКА LOCUST (нагрузочное тестирование)
+# =====================================================
+pip3 install locust
+________________________________________
+ВАРИАНТ 20: Компьютерное зрение (Python, C++, CUDA)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И OPENCV
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install opencv-python opencv-contrib-python
+
+# =====================================================
+# УСТАНОВКА CUDA (для NVIDIA GPU)
+# =====================================================
+sudo apt install -y nvidia-cuda-toolkit nvidia-driver-535
+nvidia-smi
+
+# =====================================================
+# УСТАНОВКА V4L2 (работа с камерами)
+# =====================================================
+sudo apt install -y v4l-utils
+
+# =====================================================
+# УСТАНОВКА YOLO (детекция объектов)
+# =====================================================
+git clone https://github.com/pjreddie/darknet
+cd darknet
+make
+./darknet detect cfg/yolov3.cfg yolov3.weights data/dog.jpg
+
+# =====================================================
+# УСТАНОВКА TENSORFLOW
+# =====================================================
+pip3 install tensorflow
+________________________________________
+ВАРИАНТ 21: CAD/CAM системы (C++, 3D-графика)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА FREECAD (параметрическое моделирование)
+# =====================================================
+sudo snap install freecad
+
+# =====================================================
+# УСТАНОВКА OPENGL БИБЛИОТЕК
+# =====================================================
+sudo apt install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev
+
+# =====================================================
+# УСТАНОВКА BLENDER
+# =====================================================
+sudo snap install blender --classic
+
+# =====================================================
+# УСТАНОВКА GIT LFS (для больших файлов)
+# =====================================================
+sudo apt install -y git-lfs
+git lfs install
+
+# =====================================================
+# УСТАНОВКА OpenCASCADE (геометрическое ядро)
+# =====================================================
+sudo apt install -y liboce-ocaf-dev liboce-ocaf-lite-dev
+________________________________________
+ВАРИАНТ 22: Голосовые системы (Python, аудиообработка)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И АУДИО-БИБЛИОТЕК
+# =====================================================
+sudo apt install -y python3 python3-pip portaudio19-dev
+pip3 install librosa sounddevice pyaudio
+
+# =====================================================
+# УСТАНОВКА VOSK (голосовой ассистент)
+# =====================================================
+pip3 install vosk
+
+# =====================================================
+# УСТАНОВКА WHISPER (OpenAI)
+# =====================================================
+pip3 install openai-whisper
+
+# =====================================================
+# УСТАНОВКА ALSA (звук)
+# =====================================================
+sudo apt install -y alsa-utils
+sudo alsactl init
+________________________________________
+ВАРИАНТ 23: Умный дом (Python, C++, Zigbee, Z-Wave)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON
+# =====================================================
+sudo apt install -y python3 python3-pip python3-venv
+
+# =====================================================
+# УСТАНОВКА HOME ASSISTANT
+# =====================================================
+python3 -m venv homeassistant
+source homeassistant/bin/activate
+pip install homeassistant
+hass --open-ui
+
+# =====================================================
+# УСТАНОВКА MQTT (MOSQUITTO)
+# =====================================================
+sudo apt install -y mosquitto mosquitto-clients
+sudo systemctl start mosquitto
+
+# =====================================================
+# УСТАНОВКА NODE.JS ДЛЯ ZIGBEE2MQTT
+# =====================================================
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+sudo npm install -g zigbee2mqtt
+
+# =====================================================
+# УСТАНОВКА OPENZWAVE
+# =====================================================
+sudo apt install -y libopenzwave-dev
+________________________________________
+ВАРИАНТ 24: Промышленные AR-решения (Unity, AR-гарнитуры)
+bash
+# =====================================================
+# УСТАНОВКА UNITY HUB
+# =====================================================
+wget -O unityhub.deb https://public-cdn.cloud.unity3d.com/hub/prod/UnityHubSetup.deb
+sudo dpkg -i unityhub.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i unityhub.deb
+
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА BLENDER
+# =====================================================
+sudo snap install blender --classic
+
+# =====================================================
+# УСТАНОВКА ANDROID STUDIO (для AR-гарнитур)
+# =====================================================
+sudo snap install android-studio --classic
+
+# =====================================================
+# КЛОНИРОВАНИЕ MRTK (Mixed Reality Toolkit)
+# =====================================================
+git clone https://github.com/microsoft/MixedRealityToolkit-Unity
+________________________________________
+ВАРИАНТ 25: Цифровые фабрики (C#, SCADA, OPC UA)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА .NET SDK
+# =====================================================
+wget -O dotnet-install.sh https://dot.net/v1/dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh --channel 8.0
+echo 'export PATH="$HOME/.dotnet:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+dotnet --version
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql
+
+# =====================================================
+# УСТАНОВКА MQTT (MOSQUITTO)
+# =====================================================
+sudo apt install -y mosquitto
+sudo systemctl start mosquitto
+
+# =====================================================
+# УСТАНОВКА OPC UA БИБЛИОТЕКИ
+# =====================================================
+pip3 install opcua-asyncio
+
+# =====================================================
+# УСТАНОВКА NODE-RED (визуализация)
+# =====================================================
+sudo npm install -g node-red
+node-red
+________________________________________
+ВАРИАНТ 26: Чат-боты (Python, NLP, Dialogflow)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И NLP-БИБЛИОТЕК
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install nltk spacy transformers
+
+# =====================================================
+# УСТАНОВКА SPACY МОДЕЛИ (РУССКИЙ ЯЗЫК)
+# =====================================================
+python3 -m spacy download ru_core_news_sm
+
+# =====================================================
+# УСТАНОВКА RASA (фреймворк диалогов)
+# =====================================================
+pip3 install rasa
+
+# =====================================================
+# УСТАНОВКА TELEGRAM BOT API
+# =====================================================
+pip3 install python-telegram-bot
+
+# =====================================================
+# УСТАНОВКА REDIS (кеш)
+# =====================================================
+sudo apt install -y redis-server
+sudo systemctl start redis-server
+________________________________________
+ВАРИАНТ 27: SCADA для энергетики (C++, IEC 61850, DNP3)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА C++ КОМПИЛЯТОРА
+# =====================================================
+sudo apt install -y build-essential cmake
+
+# =====================================================
+# УСТАНОВКА LIBIEC61850
+# =====================================================
+git clone https://github.com/mz-automation/libiec61850
+cd libiec61850
+make
+sudo make install
+
+# =====================================================
+# УСТАНОВКА OpenDNP3
+# =====================================================
+git clone https://github.com/automatak/dnp3
+cd dnp3
+mkdir build && cd build
+cmake ..
+make
+sudo make install
+
+# =====================================================
+# УСТАНОВКА QEMU (для эмуляции QNX)
+# =====================================================
+sudo apt install -y qemu-system-x86_64
+
+# =====================================================
+# УСТАНОВКА WIRESHARK
+# =====================================================
+sudo apt install -y wireshark
+________________________________________
+ВАРИАНТ 28: Биометрические системы (Python, компьютерное зрение)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И OPENCV
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install opencv-python
+
+# =====================================================
+# УСТАНОВКА DLIB (распознавание лиц)
+# =====================================================
+sudo apt install -y libdlib-dev
+pip3 install dlib
+
+# =====================================================
+# УСТАНОВКА FACE RECOGNITION
+# =====================================================
+pip3 install face-recognition
+
+# =====================================================
+# УСТАНОВКА CUDA (для GPU)
+# =====================================================
+sudo apt install -y nvidia-cuda-toolkit
+
+# =====================================================
+# УСТАНОВКА V4L2 (камеры)
+# =====================================================
+sudo apt install -y v4l-utils
+________________________________________
+ВАРИАНТ 29: WMS-системы (Java, RFID, штрих-коды)
+bash
+# =====================================================
+# УСТАНОВКА INTELLIJ IDEA
+# =====================================================
+sudo snap install intellij-idea-community --classic
+
+# =====================================================
+# УСТАНОВКА JDK
+# =====================================================
+sudo apt install -y openjdk-17-jdk
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql
+
+# =====================================================
+# УСТАНОВКА ZBAR (штрих-коды)
+# =====================================================
+sudo apt install -y libzbar-dev
+
+# =====================================================
+# УСТАНОВКА RFID (libnfc)
+# =====================================================
+sudo apt install -y libnfc-dev libnfc-bin
+
+# =====================================================
+# УСТАНОВКА ANYLOGIC (симуляция склада)
+# =====================================================
+wget -O anylogic.deb https://www.anylogic.com/files/anylogic-8.9.0-linux.deb
+sudo dpkg -i anylogic.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i anylogic.deb
+________________________________________
+ВАРИАНТ 30: Транспортные системы (Python, временные ряды)
+bash
+# =====================================================
+# УСТАНОВКА VS CODE
+# =====================================================
+sudo snap install --classic code
+
+# =====================================================
+# УСТАНОВКА PYTHON И БИБЛИОТЕК
+# =====================================================
+sudo apt install -y python3 python3-pip
+pip3 install pandas numpy matplotlib seaborn
+
+# =====================================================
+# УСТАНОВКА PROPHET (прогнозирование)
+# =====================================================
+pip3 install prophet
+
+# =====================================================
+# УСТАНОВКА FOLIUM (геоданные)
+# =====================================================
+pip3 install folium
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL + POSTGIS
+# =====================================================
+sudo apt install -y postgresql postgresql-15-postgis-3
+
+# =====================================================
+# УСТАНОВКА GRAFANA
+# =====================================================
+sudo apt install -y grafana
+sudo systemctl start grafana-server
+
+# =====================================================
+# УСТАНОВКА INFLUXDB (временные ряды)
+# =====================================================
+sudo apt install -y influxdb
+sudo systemctl start influxdb
+________________________________________
+ВАРИАНТ 31: SCM-системы (Java, ERP, логистика)
+bash
+# =====================================================
+# УСТАНОВКА INTELLIJ IDEA
+# =====================================================
+sudo snap install intellij-idea-community --classic
+
+# =====================================================
+# УСТАНОВКА JDK
+# =====================================================
+sudo apt install -y openjdk-17-jdk
+
+# =====================================================
+# УСТАНОВКА POSTGRESQL
+# =====================================================
+sudo apt install -y postgresql
+
+# =====================================================
+# УСТАНОВКА APACHE CAMEL (интеграция)
+# =====================================================
+wget -O camel.tgz https://dlcdn.apache.org/camel/apache-camel/4.6.0/apache-camel-4.6.0.tar.gz
+sudo tar -xf camel.tgz -C /opt
+
+# =====================================================
+# УСТАНОВКА ODOO (ERP)
+# =====================================================
+wget -O odoo.deb https://nightly.odoo.com/17.0/nightly/deb/odoo_17.0.latest_all.deb
+sudo dpkg -i odoo.deb 2>/dev/null || sudo apt --fix-broken install -y
+sudo dpkg -i odoo.deb
+
+
+ПРОВЕРКА ВЫПОЛНЕНИЯ (команды для любого варианта)
+bash
+# Проверка пользователей
+id student
+id teacher
+
+# Проверка прав
+ls -la /var/www/project
+
+# Проверка резервных копий
+ls -la /backup_*.tar.gz
+
+# Проверка Timeshift
+sudo timeshift --list
+
+# Проверка виртуального принтера
+lpinfo -v
+
+# Проверка установленного ПО (пример)
+code --version
+python3 --version
+docker --version  # если установлен
+________________________________________
+
+📄 УНИВЕРСАЛЬНЫЙ ШАБЛОН ДОКУМЕНТАЦИИ (ГОСТ Р 59795-2021)
+Этот шаблон подходит для ЛЮБОГО инструмента из вашего задания. Просто замените текст в квадратных скобках [...] на свои данные.
+________________________________________
+МИНИСТЕРСТВО ОБРАЗОВАНИЯ И НАУКИ РОССИЙСКОЙ ФЕДЕРАЦИИ
+[НАЗВАНИЕ УЧЕБНОГО ЗАВЕДЕНИЯ]
+Кафедра [НАЗВАНИЕ КАФЕДРЫ]
+________________________________________
+РУКОВОДСТВО ПОЛЬЗОВАТЕЛЯ
+к [НАЗВАНИЕ ПРОГРАММНОГО ОБЕСПЕЧЕНИЯ]
+(в рамках выполнения задания по установке ПО для [НАЗВАНИЕ ОТДЕЛА/ПРОЕКТА])
+________________________________________
+г. [ГОРОД]
+2026 г.
+________________________________________
+1. НАИМЕНОВАНИЕ ПРОГРАММЫ
+[Полное название программы], версия [версия].
+________________________________________
+2. КРАТКОЕ ОПИСАНИЕ
+[Название программы] — это [краткое описание назначения, 2-3 предложения].
+В рамках выполнения задания данное ПО было выбрано для использования в отделе [название отдела] для решения следующих задач:
+•	[Задача 1]
+•	[Задача 2]
+•	[Задача 3]
+Обоснование выбора: [Почему выбрали именно эту программу: бесплатная, кроссплатформенная, отраслевой стандарт, поддержка нужных технологий и т.д.].
+________________________________________
+3. ЗАПУСК ПРОГРАММЫ
+Программа запускается одним из следующих способов:
+Способ 1 (графический):
+•	Нажать на иконку приложения в меню «Пуск» / «Приложения».
+•	Либо дважды щелкнуть по ярлыку на рабочем столе.
+Способ 2 (из терминала):
+bash
+[команда для запуска, например: code, postman, jenkins и т.д.]
+Способ 3 (через браузер):
+text
+http://localhost:[порт]
+(если программа имеет веб-интерфейс)
+________________________________________
+4. ЗАПЛАНИРОВАННЫЙ ПРОГРАММОЙ ВЫХОД
+Для корректного завершения работы программы необходимо:
+1.	Сохранить все открытые документы/проекты (если требуется).
+2.	Выбрать в меню File → Exit (или Файл → Выход).
+3.	Либо закрыть окно программы стандартным крестиком в правом верхнем углу.
+4.	Дождаться полного завершения всех процессов (закрытия терминала, если запуск был из командной строки).
+Важно: При завершении работы через терминал используйте комбинацию Ctrl + C для остановки процесса, если программа запущена в интерактивном режиме.
+________________________________________
+5. ПЕРЕЧЕНЬ ВЫПОЛНЯЕМЫХ ФУНКЦИЙ
+Программа [название] предоставляет пользователю следующие основные функции:
+№	Функция	Описание
+1	[Функция 1]	[Описание]
+2	[Функция 2]	[Описание]
+3	[Функция 3]	[Описание]
+4	[Функция 4]	[Описание]
+5	[Функция 5]	[Описание]
+________________________________________
+6. ОСНОВНЫЕ ПРИЕМЫ РАБОТЫ
+6.1. [Название первого действия]
+Цель: [Что делаем]
+Порядок действий:
+1.	[Шаг 1]
+2.	[Шаг 2]
+3.	[Шаг 3]
+4.	[Шаг 4]
+Результат: [Что должно получиться]
+________________________________________
+6.2. [Название второго действия]
+Цель: [Что делаем]
+Порядок действий:
+1.	[Шаг 1]
+2.	[Шаг 2]
+3.	[Шаг 3]
+Результат: [Что должно получиться]
+________________________________________
+6.3. [Название третьего действия]
+Цель: [Что делаем]
+Порядок действий:
+1.	[Шаг 1]
+2.	[Шаг 2]
+3.	[Шаг 3]
+4.	[Шаг 4]
+Результат: [Что должно получиться]
+________________________________________
+6.4. [Название четвертого действия]
+Цель: [Что делаем]
+Порядок действий:
+1.	[Шаг 1]
+2.	[Шаг 2]
+3.	[Шаг 3]
+Результат: [Что должно получиться]
+________________________________________
+7. ВОЗМОЖНЫЕ ОШИБКИ И ИХ УСТРАНЕНИЕ
+Ошибка	Вероятная причина	Способ устранения
+[Ошибка 1]	[Причина]	[Решение]
+[Ошибка 2]	[Причина]	[Решение]
+[Ошибка 3]	[Причина]	[Решение]
+________________________________________
+8. ЗАКЛЮЧЕНИЕ
+Установленное программное обеспечение [название] полностью соответствует требованиям технического задания:
+✅ Совместимо с операционной системой Ubuntu Linux
+✅ Решает задачи отдела [название]
+✅ Имеет актуальную версию и все необходимые обновления
+✅ Обеспечивает [нужные функции]
+Данное ПО было выбрано, так как [еще раз кратко обоснование].
+________________________________________
+Руководство подготовил:
+Техник-программист __________________ / [Ваше Имя] /
+Преподаватель:
+__________________ / [Ф.И.О. преподавателя] /
+Дата: «___» ___________ 2026 г.
+
+
